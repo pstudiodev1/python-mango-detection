@@ -25,6 +25,7 @@ def init():
     global mainWindow
     mainWindow = Tk();
     mainWindow.title('Mango Detection')
+    mainWindow.resizable(0, 0)
     mainWindow.geometry('1800x966')
 
     #
@@ -151,7 +152,11 @@ def init():
 def process():
     # Source
     global sourceImageCV2 
-    sourceImageCV2 = cv2.imread('640x480.png')
+    #sourceImageCV2 = cv2.imread('640x480.png')
+    video = cv2.VideoCapture(0)
+    ret, sourceImageCV2 = video.read()
+
+    sourceImageCV2 = cv2.blur(sourceImageCV2, (5,5))
     
     # Gray
     grayImageCV2 = cv2.cvtColor(sourceImageCV2, cv2.COLOR_BGR2GRAY)
@@ -207,9 +212,13 @@ def process():
     # Green
     lblResultGreen.configure(text = ("Green = " + str(countAll - countYellow) + ", % = " + str("{:.2f}".format(((countAll - countYellow) * 100) / countAll))))
     print("Green = ", countAll - countYellow)
+    print("-------------------")
+
+    # Highlight aread
+    cv2.drawContours(sourceImageCV2, yellowCnts, -1, (255,255,0), 3)
+    cv2.drawContours(sourceImageCV2, allCnts, -1, (255,0,0), 3)
 
     # Source
-    cv2.drawContours(sourceImageCV2, yellowCnts, -1, (0,255,0), 3)
     sourceImageData = cv2.cvtColor(sourceImageCV2, cv2.COLOR_BGR2RGB)
     sourceImageData = Image.fromarray(sourceImageData)
     sourceImageData = ImageTk.PhotoImage(sourceImageData)
