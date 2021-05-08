@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from PIL import Image, ImageTk
 import cv2
+import threading
 
 mainWindow = None
 
@@ -106,9 +107,9 @@ def init():
     #
     # Button
     #
-    buttonSaveYellowSetting = None
-    buttonSaveYellowSetting = Button(tabSettingYellow, text ="Save", command = process, font = ("Courier", 16))
-    buttonSaveYellowSetting.place(x=460, y=300)
+    # buttonSaveYellowSetting = None
+    # buttonSaveYellowSetting = Button(tabSettingYellow, text ="Save", command = process, font = ("Courier", 16))
+    # buttonSaveYellowSetting.place(x=460, y=300)
 
     #
     # All setting
@@ -142,9 +143,9 @@ def init():
     #
     # Button
     #
-    buttonAllSetting = None
-    buttonAllSetting = Button(tabSettingAll, text ="Save", command = process, font = ("Courier", 16))
-    buttonAllSetting.place(x=460, y=300)
+    # buttonAllSetting = None
+    # buttonAllSetting = Button(tabSettingAll, text ="Save", command = process, font = ("Courier", 16))
+    # buttonAllSetting.place(x=460, y=300)
 
     #
     # Area setting
@@ -178,9 +179,9 @@ def init():
     #
     # Button
     #
-    buttonAreaSetting = None
-    buttonAreaSetting = Button(tabSettingArea, text ="Save", command = process, font = ("Courier", 16))
-    buttonAreaSetting.place(x=460, y=300)
+    # buttonAreaSetting = None
+    # buttonAreaSetting = Button(tabSettingArea, text ="Save", command = process, font = ("Courier", 16))
+    # buttonAreaSetting.place(x=460, y=300)
 
     #
     # Result
@@ -207,10 +208,9 @@ def init():
     #
     # Button
     #
-
-    buttonProcess = None
-    buttonProcess = Button(tabResult, text ="Process", command = process, font = ("Courier", 16))
-    buttonProcess.place(x=430, y=300)
+    # buttonProcess = None
+    # buttonProcess = Button(tabResult, text ="Process", command = process, font = ("Courier", 16))
+    # buttonProcess.place(x=430, y=300)
 
 def process():
     # Source
@@ -292,6 +292,9 @@ def process():
     sourceImage = Label(tabOriginal, image=sourceImageData)
     sourceImage.image = sourceImageData
     sourceImage.place(x=10, y=10)
+
+    # Next calling
+    threading.Timer(5.0, process).start()
 
 # Main entry point.
 init()
