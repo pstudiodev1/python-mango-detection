@@ -214,8 +214,12 @@ def init():
 
 def process():
     # Source
-    global sourceImageCV2 
+    global sourceImageCV2
+
+    # Source from demo image 
     sourceImageCV2 = cv2.imread('640x480.png')
+
+    # Source from USB cam
     #video = cv2.VideoCapture(0)
     #ret, sourceImageCV2 = video.read()
 
@@ -276,9 +280,14 @@ def process():
     yellowBinaryImage.place(x=10, y=10)
 
     # Green
-    lblResultGreen.configure(text = ("Green = " + str(countAll - countYellow) + ", % = " + str("{:.2f}".format(((countAll - countYellow) * 100) / countAll))))
-    print("Green = ", countAll - countYellow)
-    print("-------------------")
+    if countAll != 0:
+        lblResultGreen.configure(text = ("Green = 0, % = 0"))
+        print("Green = 0")
+        print("-------------------")
+    else:
+        lblResultGreen.configure(text = ("Green = " + str(countAll - countYellow) + ", % = " + str("{:.2f}".format(((countAll - countYellow) * 100) / countAll))))
+        print("Green = ", countAll - countYellow)
+        print("-------------------")
 
     # Highlight aread
     cv2.drawContours(sourceImageCV2, yellowCnts, -1, (255,255,0), 3)
