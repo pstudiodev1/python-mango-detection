@@ -269,8 +269,14 @@ def process():
         if scaleLowerAreaSetting.get() < cv2.contourArea(cnt) < scaleUpperAreaSetting.get():
             yellowCnts.append(cnt)
     countYellow = len(yellowCnts)
-    lblResultYellow.configure(text = ("Yellow = " + str(countYellow) + ", % = " + str("{:.2f}".format((countYellow * 100) / countAll))))
-    print("Yellow = ", countYellow)
+
+    if countAll != 0:
+        lblResultYellow.configure(text = ("Yellow = " + str(countYellow) + ", % = " + str("{:.2f}".format((countYellow * 100) / countAll))))
+        print("Yellow = ", countYellow)
+    else:
+        lblResultYellow.configure(text = ("Yellow = " + str(countYellow) + ", % = N/A"))
+        print("Yellow = ", countYellow)
+
     #
     yellowBinaryImageData = cv2.cvtColor(yellowBinaryImageCV2, cv2.COLOR_GRAY2RGB)
     yellowBinaryImageData = Image.fromarray(yellowBinaryImageData)
@@ -281,12 +287,12 @@ def process():
 
     # Green
     if countAll != 0:
-        lblResultGreen.configure(text = ("Green = 0, % = 0"))
-        print("Green = 0")
-        print("-------------------")
-    else:
         lblResultGreen.configure(text = ("Green = " + str(countAll - countYellow) + ", % = " + str("{:.2f}".format(((countAll - countYellow) * 100) / countAll))))
         print("Green = ", countAll - countYellow)
+        print("-------------------")
+    else:
+        lblResultGreen.configure(text = ("Green = 0, % = 0"))
+        print("Green = 0")
         print("-------------------")
 
     # Highlight aread
